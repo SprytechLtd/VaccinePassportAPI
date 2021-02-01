@@ -1,0 +1,30 @@
+{
+  "name": "VaccinePassportAPI",
+  "version": "1.0.0",
+  "description": "This is report consists of API calls for Vaccine Passport Application. This application is built on top of Hedera Hashgraph(Blockchain),Nodejs and MysSQL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akhilkaparthi/VaccinePassportAPI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/akhilkaparthi/VaccinePassportAPI/issues"
+  },
+  "homepage": "https://github.com/akhilkaparthi/VaccinePassportAPI#readme",
+  "dependencies": {
+    "@hashgraph/sdk": "^2.0.3",
+    "async": "^3.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.6",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.4"
+  }
+}
