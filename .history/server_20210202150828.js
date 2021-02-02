@@ -15,12 +15,12 @@ app.use((req, res, next) => {
 // const userRouter = require('./routes/quiz.js');
 // const hederaRouter = require('./routes/fees.js')
 // const hederaRouterApi = require('./routes/feesApi.js')
-const hederaSQLAPI = require('./routes/hederaSQLAPI.js')
+const hederaExtensionsApi = require('./routes/hederaSQLAPI.js')
 // const htsApi = require('./routes/hts-api');
 
 // app.use('/hedera',hederaRouter);
 // app.use('/hederaApi',hederaRouterApi);
-app.use('/hederaSQLAPI',hederaSQLAPI);
+app.use('/hederaExtensionApi',hederaExtensionsApi);
 // app.use('/hts-api',htsApi);
 
 app.listen(port, () => {

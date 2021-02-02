@@ -20,7 +20,7 @@ const hederaSQLAPI = require('./routes/hederaSQLAPI.js')
 
 // app.use('/hedera',hederaRouter);
 // app.use('/hederaApi',hederaRouterApi);
-app.use('/hederaSQLAPI',hederaSQLAPI);
+app.use('/hederaExtensionApi',hederaSQLAPI);
 // app.use('/hts-api',htsApi);
 
 app.listen(port, () => {

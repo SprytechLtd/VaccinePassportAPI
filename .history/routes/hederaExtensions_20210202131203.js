@@ -75,7 +75,10 @@ console.log("in account create")
             output["name"] =  username
             output["email"] =  email
             output["mobile"] =  mobile
-            output["accountId"] =  newAccountId.toString()
+            output["accountId"] =  
+            output["privateKey"] =  
+            output["publicKey"] =  
+            json['hederaAccount'] =  {"accountId" : newAccountId.toString(), "publicKey" : newAccountPrivateKey, "privateKey":results[0].privateKey}
             res.send(output)
              
 
@@ -126,9 +129,7 @@ console.log("in account create")
         json['email'] =  results[0].email
         json['mobile'] =  results[0].mobile
         json['password'] =  results[0].password
-        json['account'] =  results[0].accountId
-        json['publicKey'] =  results[0].publicKey
-        json['privateKey'] =  results[0].privateKey
+        json['hederaAccount'] =  {"accountId" : results[0].accountId, "publicKey" : results[0].publicKey, "privateKey":results[0].privateKey}
         
         res.send(json)
      }else{
