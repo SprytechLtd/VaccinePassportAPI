@@ -89,7 +89,7 @@ console.log("in account create")
   });
 
 
-  router.post("/getAccount", async (req, res) =>{
+  router.get("/getAccount", async (req, res) =>{
 
    // var mobile = req.query.mobile
     var email = req.query.email

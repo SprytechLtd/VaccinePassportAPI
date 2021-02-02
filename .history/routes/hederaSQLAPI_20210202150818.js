@@ -11,7 +11,7 @@ var async = require('async');
 const mysql = require("mysql");
 
 
-router.post('/createAccount', async (req, res) => {
+router.get('/createAccount', async (req, res) => {
 console.log("in account create")
   var mobile = req.query.mobile
   var username = req.query.username
@@ -89,7 +89,7 @@ console.log("in account create")
   });
 
 
-  router.post("/getAccount", async (req, res) =>{
+  router.get("/getAccount", async (req, res) =>{
 
    // var mobile = req.query.mobile
     var email = req.query.email
