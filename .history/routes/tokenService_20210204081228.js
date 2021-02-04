@@ -180,22 +180,5 @@ module.exports = {
         }
         return true;
     },
-    tokenGetInfo: async function (token) {
-        const client = this.hederaClientLocal(process.env.TREASURY_ACCOUNT_ID, process.env.TREASURY_PRIVATE_KEY);
-        const tokenResponse = token;
-        try {
-          const info = await new TokenInfoQuery()
-            .setTokenId(token.tokenId)
-            .execute(client);
     
-          //console.log(JSON.stringify(info))
-          tokenResponse.totalSupply = info.totalSupply;
-          tokenResponse.expiry = info.expirationTime.toDate();
-          tokenResponse.symbol = info.symbol
-        } catch (err) {
-          console.log(err.message);
-        }
-    
-        return tokenResponse;
-      }
 }

@@ -151,6 +151,7 @@ router.post('/patientRegistration', upload.single('national_id'), async (req, re
             }
 
 
+
         }
     } catch (error) {
         console.log(error);

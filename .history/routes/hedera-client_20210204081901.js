@@ -1,6 +1,5 @@
 require('dotenv').config();
 const { Client } = require('@hashgraph/sdk');
-const tokenServiceModule = require('./tokenService')
 
 const myAccountId = process.env.MY_ACCOUNT_ID;
 const myPrivateKey = process.env.MY_PRIVATE_KEY;
@@ -12,7 +11,6 @@ if (myAccountId == null ||
 }
 
 
-// const HederaClient = Client.forTestnet();
-// HederaClient.setOperator(myAccountId, myPrivateKey);
-const HederaClient = tokenServiceModule.hederaClientLocal(myAccountId, myPrivateKey)
+const HederaClient = Client.forTestnet();
+HederaClient.setOperator(myAccountId, myPrivateKey);
 module.exports = HederaClient;

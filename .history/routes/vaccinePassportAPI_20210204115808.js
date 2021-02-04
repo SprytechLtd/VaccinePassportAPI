@@ -96,7 +96,8 @@ router.post('/patientRegistration', upload.single('national_id'), async (req, re
                 console.log('error in upload', err)
             }
         }
-       
+        console.log('after patientFile')
+        console.log('patientFileId', patientFileId)
         const privateKey = await PrivateKey.generate();
         const tokenName = vaccine_name
         const isKyc = ""
@@ -149,6 +150,7 @@ router.post('/patientRegistration', upload.single('national_id'), async (req, re
                 res.send(response);
                 console.log('newToken', response)
             }
+
 
 
         }

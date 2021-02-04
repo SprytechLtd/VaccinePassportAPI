@@ -59,16 +59,15 @@ router.post('/patientRegistration', upload.single('national_id'), async (req, re
 
         }
         let fileId = "";
-       
         //create file service in hedera for nation_id
-        if (req.file) {
-            try {
-                const base64 = await fileServiceModule.encodeFileToBase64(req.file)
-                fileId = await fileServiceModule.fileCreate(JSON.stringify(base64));
-            } catch (err) {
-                console.log('error in upload', err)
-            }
-        }
+        // if (req.file) {
+        //     try {
+        //         const base64 = await fileServiceModule.encodeFileToBase64(req.file)
+        //         fileId = await fileServiceModule.fileCreate(JSON.stringify(base64));
+        //     } catch (err) {
+        //         console.log('error in upload', err)
+        //     }
+        // }
         console.log('fileId', fileId)
         
         const patientDets = {
@@ -85,7 +84,6 @@ router.post('/patientRegistration', upload.single('national_id'), async (req, re
         }
 
         let patientFileId;
-       
         // create file service for patient details
         if (patientDets) {
             try {
@@ -96,7 +94,8 @@ router.post('/patientRegistration', upload.single('national_id'), async (req, re
                 console.log('error in upload', err)
             }
         }
-       
+        console.log('after patientFile')
+        console.log('patientFileId', patientFileId)
         const privateKey = await PrivateKey.generate();
         const tokenName = vaccine_name
         const isKyc = ""
@@ -149,6 +148,7 @@ router.post('/patientRegistration', upload.single('national_id'), async (req, re
                 res.send(response);
                 console.log('newToken', response)
             }
+
 
 
         }

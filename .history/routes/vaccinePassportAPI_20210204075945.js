@@ -13,25 +13,10 @@ const {
     PrivateKey
 } = require("@hashgraph/sdk");
 
-//bdd scenario
 //This api call is to register the patient details to the blockchain.
-//Scenario: Create patient details into Hedera network
-//Given a petient details and blockchain available
-//when patient details are registered 
-//then patient details are stored into file service.
-//when I get file id 
-//and I will create a json object.
-//then object is stored into file service.
-//when patient file id created.
-//then file id added to the token.
-//and token create function is called.
-//then it responses token details
-
 //A new patients id proof will be save to file service and return national_id.
 //This fileid will be added to the patient details json object and store in file service, which returns patientsFileId
-//This file service is added to the token's symbol and new token is created.
-//this new token is used for the future reference.
-
+//
 router.post('/patientRegistration', upload.single('national_id'), async (req, res) => {
     console.log("in patient registration")
     try {
@@ -59,7 +44,6 @@ router.post('/patientRegistration', upload.single('national_id'), async (req, re
 
         }
         let fileId = "";
-       
         //create file service in hedera for nation_id
         if (req.file) {
             try {
@@ -70,7 +54,6 @@ router.post('/patientRegistration', upload.single('national_id'), async (req, re
             }
         }
         console.log('fileId', fileId)
-        
         const patientDets = {
             name: name,
             address: address,
@@ -85,7 +68,6 @@ router.post('/patientRegistration', upload.single('national_id'), async (req, re
         }
 
         let patientFileId;
-       
         // create file service for patient details
         if (patientDets) {
             try {
@@ -96,14 +78,14 @@ router.post('/patientRegistration', upload.single('national_id'), async (req, re
                 console.log('error in upload', err)
             }
         }
-       
+        console.log('after patientFile')
+        console.log('patientFileId', patientFileId)
         const privateKey = await PrivateKey.generate();
         const tokenName = vaccine_name
         const isKyc = ""
         let message = "msg:" + patientFileId;
         console.log('patientFileId', patientFileId)
-        
-        //building token details
+        // patientFileId = "";
         if (patientFileId != "") {
             const treasury_account_id = process.env.TREASURY_ACCOUNT_ID;
             const token = {
@@ -123,32 +105,23 @@ router.post('/patientRegistration', upload.single('national_id'), async (req, re
                 key: privateKey.toString(),
                 message: patientFileId !== "" ? message : ""
             };
-            
-            //create token with patient details
+
             const newToken = await tokenServiceModule.tokenCreate(token);
             if (newToken.status == true) {
                 const response = {
+                    status: newToken.status,
+                    tokenId: newToken.tokenId,
+                    token_private_key: newToken.token_private_key,
+                    token_public_key: newToken.token_public_key,
                     fileId: fileId,
-                    patientId: patientFileId,
-                    name: name,
-                    address: address,
-                    dob: dob,
-                    blood_group: blood_group,
-                    vaccine_name: vaccine_name,
-                    vaccine_type: vaccine_type,
-                    company: company,
-                    date_of_vaccine: date_of_vaccine,
-                    dose_no: dose_no,
-                    id: id,
-                    patientVaccineToken: {status: newToken.status,
-                        tokenId: newToken.tokenId,
-                        token_private_key: newToken.token_private_key,
-                        token_public_key: newToken.token_public_key}
+                    patientFileId: patientFileId
+
                 };
                 const saveToken = sqlServices.hederaClientLocal(response, id);
                 res.send(response);
                 console.log('newToken', response)
             }
+
 
 
         }
@@ -158,12 +131,5 @@ router.post('/patientRegistration', upload.single('national_id'), async (req, re
     }
 });
 
-router.route('/getTokenInfo').post(async (req, res) => {
 
-    const token = {}
-    token.tokenId = req.query.tokenId
-   const info = await tokenServiceModule.tokenGetInfo(token)
-   res.json(info)
-    
-})
 module.exports = router;

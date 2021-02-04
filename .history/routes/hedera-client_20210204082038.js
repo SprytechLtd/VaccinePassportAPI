@@ -14,5 +14,5 @@ if (myAccountId == null ||
 
 // const HederaClient = Client.forTestnet();
 // HederaClient.setOperator(myAccountId, myPrivateKey);
-const HederaClient = tokenServiceModule.hederaClientLocal(myAccountId, myPrivateKey)
+const HederaClient = tokenServiceModule.hederaClientLocal
 module.exports = HederaClient;

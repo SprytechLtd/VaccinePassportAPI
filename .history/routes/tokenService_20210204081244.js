@@ -181,7 +181,7 @@ module.exports = {
         return true;
     },
     tokenGetInfo: async function (token) {
-        const client = this.hederaClientLocal(process.env.TREASURY_ACCOUNT_ID, process.env.TREASURY_PRIVATE_KEY);
+        const client = HederaClient;
         const tokenResponse = token;
         try {
           const info = await new TokenInfoQuery()

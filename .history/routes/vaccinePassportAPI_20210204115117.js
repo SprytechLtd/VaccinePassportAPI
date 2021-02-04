@@ -59,16 +59,15 @@ router.post('/patientRegistration', upload.single('national_id'), async (req, re
 
         }
         let fileId = "";
-       
         //create file service in hedera for nation_id
-        if (req.file) {
-            try {
-                const base64 = await fileServiceModule.encodeFileToBase64(req.file)
-                fileId = await fileServiceModule.fileCreate(JSON.stringify(base64));
-            } catch (err) {
-                console.log('error in upload', err)
-            }
-        }
+        // if (req.file) {
+        //     try {
+        //         const base64 = await fileServiceModule.encodeFileToBase64(req.file)
+        //         fileId = await fileServiceModule.fileCreate(JSON.stringify(base64));
+        //     } catch (err) {
+        //         console.log('error in upload', err)
+        //     }
+        // }
         console.log('fileId', fileId)
         
         const patientDets = {
@@ -85,18 +84,18 @@ router.post('/patientRegistration', upload.single('national_id'), async (req, re
         }
 
         let patientFileId;
-       
         // create file service for patient details
-        if (patientDets) {
-            try {
-                var jsonBase64 = new Buffer.from(JSON.stringify(patientDets)).toString("base64");
-                console.log('jsonBase64', jsonBase64)
-                patientFileId = await fileServiceModule.fileCreate(JSON.stringify(jsonBase64));
-            } catch (err) {
-                console.log('error in upload', err)
-            }
-        }
-       
+        // if (patientDets) {
+        //     try {
+        //         var jsonBase64 = new Buffer.from(JSON.stringify(patientDets)).toString("base64");
+        //         console.log('jsonBase64', jsonBase64)
+        //         patientFileId = await fileServiceModule.fileCreate(JSON.stringify(jsonBase64));
+        //     } catch (err) {
+        //         console.log('error in upload', err)
+        //     }
+        // }
+        console.log('after patientFile')
+        console.log('patientFileId', patientFileId)
         const privateKey = await PrivateKey.generate();
         const tokenName = vaccine_name
         const isKyc = ""
@@ -128,6 +127,7 @@ router.post('/patientRegistration', upload.single('national_id'), async (req, re
             const newToken = await tokenServiceModule.tokenCreate(token);
             if (newToken.status == true) {
                 const response = {
+                    
                     fileId: fileId,
                     patientId: patientFileId,
                     name: name,
@@ -140,15 +140,13 @@ router.post('/patientRegistration', upload.single('national_id'), async (req, re
                     date_of_vaccine: date_of_vaccine,
                     dose_no: dose_no,
                     id: id,
-                    patientVaccineToken: {status: newToken.status,
-                        tokenId: newToken.tokenId,
-                        token_private_key: newToken.token_private_key,
-                        token_public_key: newToken.token_public_key}
+                    patientVaccineToken: newToken
                 };
-                const saveToken = sqlServices.hederaClientLocal(response, id);
+                //const saveToken = sqlServices.hederaClientLocal(response, id);
                 res.send(response);
                 console.log('newToken', response)
             }
+
 
 
         }
