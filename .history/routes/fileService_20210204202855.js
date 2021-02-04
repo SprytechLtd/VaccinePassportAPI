@@ -299,13 +299,25 @@ module.exports = {
         try {
             var base64 =  patientFileData.toString();
             var formattedBase64 = base64.substring(1, base64.length-1);
+            console.log('formattedBase64',formattedBase64)
+            
             var buf = Buffer.from(formattedBase64,'base64');
+            console.log('buf',buf)
+            
+            
+            // const temp1 = JSON.stringify(patientFileData);
+            // const temp  = Buffer.from(temp1).toString("ascii");
+            // let buff = new Buffer.from(patientFileData, 'ascii');
+            // console.log('buff',buff)
             let text = buf.toString('ascii');
-            myJSON = JSON.parse(text)
+            console.log('text',text)
+            var myJSON = JSON.parse(text)
+            console.log('myJSON',myJSON)
+            return content;
         } catch (err) {
           console.log(err.message);
         }
     
-        return myJSON;
+        return tokenResponse;
       }
 }

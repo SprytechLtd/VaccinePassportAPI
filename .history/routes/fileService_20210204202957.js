@@ -302,6 +302,7 @@ module.exports = {
             var buf = Buffer.from(formattedBase64,'base64');
             let text = buf.toString('ascii');
             myJSON = JSON.parse(text)
+            console.log('myJSON',myJSON)
         } catch (err) {
           console.log(err.message);
         }

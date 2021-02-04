@@ -197,7 +197,7 @@ router.route('/getTokenInfo').post(async (req, res) => {
                 token_public_key: ""
             }
         };
-        res.json(response)
+        res.json(info)
   
     }else{
         res.json({ "status": false });

@@ -299,9 +299,13 @@ module.exports = {
         try {
             var base64 =  patientFileData.toString();
             var formattedBase64 = base64.substring(1, base64.length-1);
+            
             var buf = Buffer.from(formattedBase64,'base64');
+            console.log('buf',buf)
             let text = buf.toString('ascii');
+            console.log('text',text)
             myJSON = JSON.parse(text)
+            console.log('myJSON',myJSON)
         } catch (err) {
           console.log(err.message);
         }

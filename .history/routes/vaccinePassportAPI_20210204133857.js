@@ -89,8 +89,11 @@ router.post('/patientRegistration', upload.single('national_id'), async (req, re
         // create file service for patient details
         if (patientDets) {
             try {
+                console.log('patientDets',patientDets)
                 var patientDetsJSONStrt = JSON.stringify(patientDets)
+                console.log('patientDetsJSONStrt',patientDetsJSONStrt)
                 var jsonBase64 = new Buffer.from(patientDetsJSONStrt).toString("base64");
+                console.log('jsonBase64', jsonBase64)
                 var jsonBase64Str = (JSON.stringify(jsonBase64));
                 patientFileId = await fileServiceModule.fileCreate(jsonBase64Str);
             } catch (err) {
@@ -105,54 +108,54 @@ router.post('/patientRegistration', upload.single('national_id'), async (req, re
         console.log('patientFileId', patientFileId)
 
         //building token details
-        if (patientFileId != "") {
-            const treasury_account_id = process.env.TREASURY_ACCOUNT_ID;
-            const token = {
-                name: tokenName,
-                symbol: patientFileId !== "" ? message : undefined,
-                decimals: 0,
-                initialSupply: 1,
-                adminKey: undefined,
-                kycKey: isKyc !== "" ? privateKey.toString() : undefined,
-                freezeKey: undefined,
-                wipeKey: undefined,
-                supplyKey: undefined,
-                defaultFreezeStatus: undefined,
-                autoRenewAccount: treasury_account_id,
-                treasury: treasury_account_id,
-                deleted: false,
-                key: privateKey.toString(),
-                message: patientFileId !== "" ? message : ""
-            };
+        // if (patientFileId != "") {
+        //     const treasury_account_id = process.env.TREASURY_ACCOUNT_ID;
+        //     const token = {
+        //         name: tokenName,
+        //         symbol: patientFileId !== "" ? message : undefined,
+        //         decimals: 0,
+        //         initialSupply: 1,
+        //         adminKey: undefined,
+        //         kycKey: isKyc !== "" ? privateKey.toString() : undefined,
+        //         freezeKey: undefined,
+        //         wipeKey: undefined,
+        //         supplyKey: undefined,
+        //         defaultFreezeStatus: undefined,
+        //         autoRenewAccount: treasury_account_id,
+        //         treasury: treasury_account_id,
+        //         deleted: false,
+        //         key: privateKey.toString(),
+        //         message: patientFileId !== "" ? message : ""
+        //     };
 
-            //create token with patient details
-            const newToken = await tokenServiceModule.tokenCreate(token);
-            if (newToken.status == true) {
-                const response = {
-                    status: newToken.status,
-                    fileId: fileId,
-                    patientId: patientFileId,
-                    name: name,
-                    address: address,
-                    dob: dob,
-                    blood_group: blood_group,
-                    vaccine_name: vaccine_name,
-                    vaccine_type: vaccine_type,
-                    company: company,
-                    date_of_vaccine: date_of_vaccine,
-                    dose_no: dose_no,
-                    id: id,
-                    patientVaccineToken: {
-                        status: newToken.status,
-                        tokenId: newToken.tokenId,
-                        token_private_key: newToken.token_private_key,
-                        token_public_key: newToken.token_public_key
-                    }
-                };
-                const saveToken = sqlServices.hederaClientLocal(response, id);
-                res.send(response);
-                console.log('newToken', response)
-            }
+        //     //create token with patient details
+        //     const newToken = await tokenServiceModule.tokenCreate(token);
+        //     if (newToken.status == true) {
+        //         const response = {
+        //             status: newToken.status,
+        //             fileId: fileId,
+        //             patientId: patientFileId,
+        //             name: name,
+        //             address: address,
+        //             dob: dob,
+        //             blood_group: blood_group,
+        //             vaccine_name: vaccine_name,
+        //             vaccine_type: vaccine_type,
+        //             company: company,
+        //             date_of_vaccine: date_of_vaccine,
+        //             dose_no: dose_no,
+        //             id: id,
+        //             patientVaccineToken: {
+        //                 status: newToken.status,
+        //                 tokenId: newToken.tokenId,
+        //                 token_private_key: newToken.token_private_key,
+        //                 token_public_key: newToken.token_public_key
+        //             }
+        //         };
+        //         const saveToken = sqlServices.hederaClientLocal(response, id);
+        //         res.send(response);
+        //         console.log('newToken', response)
+        //     }
 
 
         }
@@ -166,44 +169,26 @@ router.route('/getTokenInfo').post(async (req, res) => {
 
     const token = {}
     token.tokenId = req.query.tokenId
-    const id = req.query.tokenId
     const info = await tokenServiceModule.tokenGetInfo(token)
     if(info.status == true){
         let symbol = info.symbol
-        console.log('symbol',symbol)
         let patientId = info.symbol.replace("MSG:", "");
-        console.log('patientId',patientId)
         const patientFileData = await fileServiceModule.fileGetContents(patientId);
-        const patientDets = await fileServiceModule.fileToJSON(patientFileData);
-        console.log('patientDets',patientDets)
-        const response = {
-            status: info.status,
-            fileId: patientDets.fileId,
-            patientId: patientId,
-            name: patientDets.name,
-            address: patientDets.address,
-            dob: patientDets.dob,
-            blood_group: patientDets.blood_group,
-            vaccine_name: patientDets.vaccine_name,
-            vaccine_type: patientDets.vaccine_type,
-            company: patientDets.company,
-            date_of_vaccine: patientDets.date_of_vaccine,
-            dose_no: patientDets.dose_no,
-            id: id,
-            patientVaccineToken: {
-                status: info.status,
-                tokenId: info.tokenId,
-                token_private_key: "",
-                token_public_key: ""
-            }
-        };
-        res.json(response)
-  
-    }else{
-        res.json({ "status": false });
+        console.log('patientFileData',patientFileData)
+        const temp1 = JSON.stringify(patientFileData);
+        const temp  = Buffer.from(temp1).toString("ascii");
+        // let buff = new Buffer.from(patientFileData, 'ascii');
+        // console.log('buff',buff)
+        // let text = buff.toString('ascii');
+        console.log('temp',temp)
+        // const patientFileDataString = new TextDecoder().decode(patientFileData);
+        // console.log('patientFileDataString',patientFileDataString)
+        // const pateintFileJSON = JSON.parse(patientFileDataString);
+        // console.log('pateintFileJSON',pateintFileJSON)
+
     }
 
-    
+    res.json(info)
 
 })
 module.exports = router;

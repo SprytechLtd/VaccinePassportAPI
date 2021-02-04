@@ -192,12 +192,11 @@ module.exports = {
           tokenResponse.totalSupply = info.totalSupply;
           tokenResponse.expiry = info.expirationTime.toDate();
           tokenResponse.symbol = info.symbol
-          tokenResponse.status = true
+          tokenResponse.status = 
         } catch (err) {
           console.log(err.message);
         }
     
         return tokenResponse;
       }
-      
 }

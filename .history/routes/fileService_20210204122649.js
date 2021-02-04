@@ -291,21 +291,8 @@ module.exports = {
             .setFileId(FileId.fromString(fileId))
             .execute(client);
         } catch (err) {
+          notifyError(err.message);
         }
         return info;
-      },
-      fileToJSON: async function (patientFileData) {
-        var myJSON;
-        try {
-            var base64 =  patientFileData.toString();
-            var formattedBase64 = base64.substring(1, base64.length-1);
-            var buf = Buffer.from(formattedBase64,'base64');
-            let text = buf.toString('ascii');
-            myJSON = JSON.parse(text)
-        } catch (err) {
-          console.log(err.message);
-        }
-    
-        return myJSON;
       }
 }

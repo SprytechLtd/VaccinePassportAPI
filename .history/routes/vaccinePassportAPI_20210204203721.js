@@ -166,7 +166,6 @@ router.route('/getTokenInfo').post(async (req, res) => {
 
     const token = {}
     token.tokenId = req.query.tokenId
-    const id = req.query.tokenId
     const info = await tokenServiceModule.tokenGetInfo(token)
     if(info.status == true){
         let symbol = info.symbol
@@ -187,8 +186,8 @@ router.route('/getTokenInfo').post(async (req, res) => {
             vaccine_name: patientDets.vaccine_name,
             vaccine_type: patientDets.vaccine_type,
             company: patientDets.company,
-            date_of_vaccine: patientDets.date_of_vaccine,
-            dose_no: patientDets.dose_no,
+            date_of_vaccine: date_of_vaccine,
+            dose_no: dose_no,
             id: id,
             patientVaccineToken: {
                 status: info.status,
@@ -197,7 +196,7 @@ router.route('/getTokenInfo').post(async (req, res) => {
                 token_public_key: ""
             }
         };
-        res.json(response)
+        res.json(info)
   
     }else{
         res.json({ "status": false });

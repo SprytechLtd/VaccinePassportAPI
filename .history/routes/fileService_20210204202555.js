@@ -294,18 +294,23 @@ module.exports = {
         }
         return info;
       },
-      fileToJSON: async function (patientFileData) {
-        var myJSON;
+      fileToJSON: async function (token) {
+        const client = this.hederaClientLocal(process.env.TREASURY_ACCOUNT_ID, process.env.TREASURY_PRIVATE_KEY);
+        const tokenResponse = token;
         try {
-            var base64 =  patientFileData.toString();
-            var formattedBase64 = base64.substring(1, base64.length-1);
-            var buf = Buffer.from(formattedBase64,'base64');
-            let text = buf.toString('ascii');
-            myJSON = JSON.parse(text)
+          const info = await new TokenInfoQuery()
+            .setTokenId(token.tokenId)
+            .execute(client);
+    
+          //console.log(JSON.stringify(info))
+          tokenResponse.totalSupply = info.totalSupply;
+          tokenResponse.expiry = info.expirationTime.toDate();
+          tokenResponse.symbol = info.symbol
+          tokenResponse.status = true
         } catch (err) {
           console.log(err.message);
         }
     
-        return myJSON;
+        return tokenResponse;
       }
 }

@@ -166,7 +166,7 @@ router.route('/getTokenInfo').post(async (req, res) => {
 
     const token = {}
     token.tokenId = req.query.tokenId
-    const id = req.query.tokenId
+    const = req.query.tokenId
     const info = await tokenServiceModule.tokenGetInfo(token)
     if(info.status == true){
         let symbol = info.symbol
@@ -197,7 +197,7 @@ router.route('/getTokenInfo').post(async (req, res) => {
                 token_public_key: ""
             }
         };
-        res.json(response)
+        res.json(info)
   
     }else{
         res.json({ "status": false });
