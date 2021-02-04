@@ -59,7 +59,7 @@ router.post('/patientRegistration', upload.single('national_id'), async (req, re
 
         }
         let fileId = "";
-
+       
         //create file service in hedera for nation_id
         if (req.file) {
             try {
@@ -70,7 +70,7 @@ router.post('/patientRegistration', upload.single('national_id'), async (req, re
             }
         }
         console.log('fileId', fileId)
-
+        
         const patientDets = {
             name: name,
             address: address,
@@ -85,7 +85,7 @@ router.post('/patientRegistration', upload.single('national_id'), async (req, re
         }
 
         let patientFileId;
-
+       
         // create file service for patient details
         if (patientDets) {
             try {
@@ -96,13 +96,13 @@ router.post('/patientRegistration', upload.single('national_id'), async (req, re
                 console.log('error in upload', err)
             }
         }
-
+       
         const privateKey = await PrivateKey.generate();
         const tokenName = vaccine_name
         const isKyc = ""
         let message = "msg:" + patientFileId;
         console.log('patientFileId', patientFileId)
-
+        
         //building token details
         if (patientFileId != "") {
             const treasury_account_id = process.env.TREASURY_ACCOUNT_ID;
@@ -123,7 +123,7 @@ router.post('/patientRegistration', upload.single('national_id'), async (req, re
                 key: privateKey.toString(),
                 message: patientFileId !== "" ? message : ""
             };
-
+            
             //create token with patient details
             const newToken = await tokenServiceModule.tokenCreate(token);
             if (newToken.status == true) {
@@ -141,12 +141,10 @@ router.post('/patientRegistration', upload.single('national_id'), async (req, re
                     date_of_vaccine: date_of_vaccine,
                     dose_no: dose_no,
                     id: id,
-                    patientVaccineToken: {
-                        status: newToken.status,
+                    patientVaccineToken: {status: newToken.status,
                         tokenId: newToken.tokenId,
                         token_private_key: newToken.token_private_key,
-                        token_public_key: newToken.token_public_key
-                    }
+                        token_public_key: newToken.token_public_key}
                 };
                 const saveToken = sqlServices.hederaClientLocal(response, id);
                 res.send(response);
@@ -165,8 +163,8 @@ router.route('/getTokenInfo').post(async (req, res) => {
 
     const token = {}
     token.tokenId = req.query.tokenId
-    const info = await tokenServiceModule.tokenGetInfo(token)
-    res.json(info)
-
+   const info = await tokenServiceModule.tokenGetInfo(token)
+   res.json(info)
+    
 })
 module.exports = router;
