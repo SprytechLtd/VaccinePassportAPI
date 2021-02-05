@@ -14,6 +14,7 @@ const {
 } = require("@hashgraph/sdk");
 
 
+
 //A new patients id proof will be save to file service and return national_id.
 //This fileid will be added to the patient details json object and store in file service, which returns patientsFileId
 //This file service is added to the token's symbol and new token is created.

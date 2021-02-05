@@ -15,7 +15,7 @@ app.use((req, res, next) => {
 const hederaSQLAPI = require('./routes/hederaSQLAPI.js')
 const vaccinePassportAPI = require('./routes/vaccinePassportAPI');
 
-app.use('/hederaSQLAPI',hederaSQLAPI);
+/pp.use('/hederaSQLAPI',hederaSQLAPI);
 app.use('/vaccinePassportAPI',vaccinePassportAPI);
 
 app.listen(port, () => {

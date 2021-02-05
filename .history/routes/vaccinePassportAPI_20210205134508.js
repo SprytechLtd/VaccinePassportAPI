@@ -13,6 +13,19 @@ const {
     PrivateKey
 } = require("@hashgraph/sdk");
 
+//bdd scenario
+//This api call is to register the patient details to the blockchain.
+//Scenario: Create patient details into Hedera network
+//Given a petient details and blockchain available
+//when patient details are registered 
+//then patient details are stored into file service.
+//when I get file id 
+//and I will create a json object.
+//then object is stored into file service.
+//when patient file id created.
+//then file id added to the token.
+//and token create function is called.
+//then it responses token details
 
 //A new patients id proof will be save to file service and return national_id.
 //This fileid will be added to the patient details json object and store in file service, which returns patientsFileId
