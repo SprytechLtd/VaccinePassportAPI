@@ -6,8 +6,8 @@ module.exports = {
     hederaClientLocal: function (tokenDets,id) {
         console.log("in account create")
         var tokenId = tokenDets.patientVaccineToken.tokenId;
-        var token_private_key = tokenDets.patientVaccineToken.token_private_key;
-        var token_public_key = tokenDets.patientVaccineToken.token_public_key;
+        var token_private_key = tokenDets.patientVaccineToken
+        var token_public_key = tokenDets.patientVaccineToken
         var fileId = tokenDets.fileId
         var patientFileId = tokenDets.patientId
 
